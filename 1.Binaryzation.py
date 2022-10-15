@@ -17,6 +17,7 @@ from scipy.io import loadmat, savemat
 
 file_path = "E:/0.MasterStudent/ADDetection/NetwrokConstruction/3.Results_Network_BD/"
 file_name = "LMCI_BinomialDistributionNetwork.mat"
+lkjdclksdjf
 
 Gamma_Result = 0.2794  # AD: 0.2984  CN: 0.2930  EMCI: 0.2693  LMCI: 0.2794
 NetworkMatrix = loadmat(file_path + file_name)["BD_NetworkMatrix"]
