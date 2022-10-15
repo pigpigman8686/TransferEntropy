@@ -22,17 +22,24 @@ NetworkMatrix = [loadmat(input_folder_path + file_name_AD)["BDBinaryzationNetwor
                  loadmat(input_folder_path + file_name_EMCI)["BDBinaryzationNetworkMatrix"],
                  loadmat(input_folder_path + file_name_LMCI)["BDBinaryzationNetworkMatrix"]]  # 0:AD 1:CN 2:EMCI 3:LMCI
 
+
+def sum(row_data):
+    ans = 0
+    for i in range(0, len(row_data)):
+        if row_data[i]:
+            ans += 1
+    return ans
+
+
 size = np.shape(NetworkMatrix[0])
 degree_list = np.array([np.zeros(size[0]), np.zeros(size[0]), np.zeros(size[0]), np.zeros(size[0])])
 for i in range(0, 4):  # 统计四类人每个脑区的度
     for row in range(0, size[0]):
-        for col in range(0, size[1]):
-            if NetworkMatrix[i][row][col] != 0:
-                degree_list[i][row] += 1
+        degree_list[i][row] = sum(NetworkMatrix[i][row])
 # print(degree_list[0])
 
 # Average Degree Centrality
-average_degree = (degree_list[0] + degree_list[1] + degree_list[2] + degree_list[3]) / (4 * size[0])
+average_degree = (degree_list[0] + degree_list[1] + degree_list[2] + degree_list[3]) / (4 * (size[0] - 1))
 ans = np.argsort(-average_degree)  # 排序，返回从大到小的下标
 with open('AverageDegreeCentralityTop20ROIs.csv', 'w') as f:
     f.write("begin_0_index,origin_index,centrality\n")
